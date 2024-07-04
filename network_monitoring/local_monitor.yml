@@ -1,0 +1,27 @@
+- name: Monitor Local System
+  hosts: localhost
+  gather_facts: no
+  tasks:
+    - name: Get CPU load
+      command: cat /proc/loadavg
+      register: cpu_load
+
+    - name: Display CPU load
+      debug:
+        msg: "CPU Load: {{ cpu_load.stdout }}"
+
+    - name: Check memory usage
+      command: free -m
+      register: memory_usage
+
+    - name: Display memory usage
+      debug:
+        msg: "Memory Usage: {{ memory_usage.stdout }}"
+
+    - name: Fetch network interfaces
+      command: ip a
+      register: ifconfig_output
+
+    - name: Display network interfaces
+      debug:
+        msg: "{{ ifconfig_output.stdout }}"
